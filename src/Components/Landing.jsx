@@ -13,6 +13,7 @@ import inImg from '../assets/images/in.png'
 import twitterImg from '../assets/images/twitter.png'
 import utubeImg from '../assets/images/utube.png'
 import instaImg from '../assets/images/Instagram.png'
+import axios from "axios";
 
 
 const cardData = [
@@ -41,6 +42,12 @@ const Landing = () => {
     const [expanded, setExpanded] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [modalType, setModalType] = useState("");
+    const [userData, setUserData] = useState([]);
+    const [formData, setFormData] = useState({
+        name: "",
+        price: "",
+        description: "",
+    });
 
     const handleToggle = () => setExpanded(!expanded);
 
@@ -49,20 +56,37 @@ const Landing = () => {
         setShowModal(true);
     };
     const handleCloseModal = () => setShowModal(false);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const handleSubmit = async () => {
+        try {
+            const response = await axios.post(
+                "http://localhost:3001/api/users",
+                formData
+            );
+            const newUser = response.data;
+            setUserData((prev) => [...prev, newUser]);
+            setFormData({ name: "", description: "", price: "" });
+            setShowModal(false);
+
+        } catch (error) {
+            console.error("Error saving purchase:", error);
+        }
+    };
+
+
     return (
         <>
 
             <div>
-                <Navbar
-                    expand="md"
-                    className="container flex justify-between items-center py-4"
-                    expanded={expanded}
-                >
-
-                    <Navbar.Brand href="#" className="font-bold ml-4 ">
+                <Navbar expand="md" className="container flex justify-between items-center py-4" expanded={expanded}>
+                    <Navbar.Brand href="#" className="font-bold ml-4">
                         Logo
                     </Navbar.Brand>
-
 
                     <Navbar.Toggle
                         aria-controls="basic-navbar-nav"
@@ -72,12 +96,8 @@ const Landing = () => {
                         <span className="navbar-toggler-icon"></span>
                     </Navbar.Toggle>
 
-
-                    <Navbar.Collapse
-                        id="basic-navbar-nav"
-                        className={`${expanded ? "block" : "hidden"} md:flex space-x-6`}
-                    >
-                        <Nav className="me-auto xl:ms-80 lg:ms-56 md:ms-28 ">
+                    <Navbar.Collapse id="basic-navbar-nav" className={`${expanded ? "block" : "hidden"} md:flex space-x-6`}>
+                        <Nav className="me-auto xl:ms-80 lg:ms-56 md:ms-28">
                             <Nav.Link href="#" className="text-gray-700 hover:text-blue-500">
                                 Home
                             </Nav.Link>
@@ -89,28 +109,27 @@ const Landing = () => {
                             </Nav.Link>
                         </Nav>
 
-
                         <div className="flex ms-0 space-x-4">
                             <button
                                 onClick={() => handleShowModal("purchase")}
-                                className=" hover:bg-blue-600 buy-now"
+                                className="hover:bg-blue-600 buy-now"
                             >
                                 Purchase Item
                             </button>
                             <button
                                 onClick={() => handleShowModal("login")}
-                                className=" hover:bg-gray-700 buy-now"
+                                className="hover:bg-gray-700 buy-now"
                             >
                                 Login
                             </button>
                         </div>
                     </Navbar.Collapse>
                 </Navbar>
+
+
                 <Modal show={showModal} onHide={handleCloseModal} centered>
                     <Modal.Header closeButton>
-                        <Modal.Title>
-                            {modalType === "login" ? "Login" : "Purchase Item"}
-                        </Modal.Title>
+                        <Modal.Title>{modalType === "login" ? "Login" : "Purchase Item"}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         {modalType === "login" ? (
@@ -137,42 +156,51 @@ const Landing = () => {
                             <form>
                                 <div className="mb-4">
                                     <label
-                                        htmlFor="itemName"
+                                        htmlFor="name"
                                         className="block text-sm font-semibold text-gray-700 mb-1"
                                     >
                                         Name:
                                     </label>
                                     <input
                                         type="text"
-                                        id="itemName"
+                                        id="name"
+                                        name='name'
+                                        value={formData.name}
+                                        onChange={handleChange}
                                         placeholder="Enter the item name..."
                                         className="block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 px-3 py-2"
                                     />
                                 </div>
                                 <div className="mb-4">
                                     <label
-                                        htmlFor="itemPrice"
+                                        htmlFor="price"
                                         className="block text-sm font-semibold text-gray-700 mb-1"
                                     >
                                         Price:
                                     </label>
                                     <input
                                         type="number"
-                                        id="itemPrice"
+                                        id="price"
+                                        name='price'
+                                        value={formData.price}
+                                        onChange={handleChange}
                                         placeholder="Enter the price..."
                                         className="block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 px-3 py-2"
                                     />
                                 </div>
                                 <div className="mb-4">
                                     <label
-                                        htmlFor="itemDescription"
+                                        htmlFor="description"
                                         className="block text-sm font-semibold text-gray-700 mb-1"
                                     >
                                         Description:
                                     </label>
                                     <input
                                         type="text"
-                                        id="itemDescription"
+                                        id="description"
+                                        name='description'
+                                        value={formData.description}
+                                        onChange={handleChange}
                                         placeholder="Enter the description..."
                                         className="block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 px-3 py-2"
                                     />
@@ -181,19 +209,21 @@ const Landing = () => {
                         )}
                     </Modal.Body>
                     <Modal.Footer>
+                        {modalType === "purchase" && (
+                            <Button
+                                variant="success"
+                                onClick={handleSubmit}
+                                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                            >
+                                Confirm Purchase
+                            </Button>
+                        )}
                         <Button
                             variant="secondary"
                             onClick={handleCloseModal}
                             className="px-4 py-2"
                         >
-                            Close
-                        </Button>
-                        <Button
-                            variant={modalType === "login" ? "primary" : "success"}
-                            onClick={handleCloseModal}
-                            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-                        >
-                            {modalType === "login" ? "Login" : "Confirm Purchase"}
+                            Cancel
                         </Button>
                     </Modal.Footer>
                 </Modal>
