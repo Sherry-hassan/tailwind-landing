@@ -348,20 +348,20 @@ const Landing = () => {
 
 
                             <div className="footer-icons-list flex justify-center mt-4 gap-4">
-                                <a href="#" className="w-8 h-8">
-                                    <img src={fbImg} alt="fb-icon" className="w-full h-auto" />
+                                <a href="#" >
+                                    <img src={fbImg} alt="fb-icon" />
                                 </a>
-                                <a href="#" className="w-8 h-8">
-                                    <img src={inImg} alt="in-icon" className="w-full h-auto" />
+                                <a href="#" >
+                                    <img src={inImg} alt="in-icon" />
                                 </a>
-                                <a href="#" className="w-8 h-8">
-                                    <img src={twitterImg} alt="twitter-icon" className="w-full h-auto" />
+                                <a href="#" >
+                                    <img src={twitterImg} alt="twitter-icon" />
                                 </a>
-                                <a href="#" className="w-8 h-8">
-                                    <img src={utubeImg} alt="youtube-icon" className="w-full h-auto" />
+                                <a href="#">
+                                    <img src={utubeImg} alt="youtube-icon" />
                                 </a>
-                                <a href="#" className="w-8 h-8">
-                                    <img src={instaImg} alt="instagram-icon" className="w-full h-auto" />
+                                <a href="#">
+                                    <img src={instaImg} alt="instagram-icon" />
                                 </a>
                             </div>
                         </div>
