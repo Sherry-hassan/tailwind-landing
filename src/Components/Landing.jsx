@@ -15,7 +15,6 @@ import utubeImg from '../assets/images/utube.png'
 import instaImg from '../assets/images/Instagram.png'
 
 
-
 const cardData = [
     {
         id: 1,
@@ -53,6 +52,8 @@ const Landing = () => {
     const handleCloseModal = () => {
         setShowModal(false);
     }
+
+
     return (
         <>
             <Navbar
@@ -178,6 +179,7 @@ const Landing = () => {
                 </div>
             </Modal>
 
+
             <div className="container-fluid main-section">
                 <div className="flex justify-center items-center">
                     <div className="lg:w-2/3 xl:w-2/3 md:w-full sm:w-full xs:w-full mt-5 hero-section">
@@ -186,11 +188,11 @@ const Landing = () => {
                             <br />
                             Quickly & Efficiently
                         </h1>
-                        <p className="text-muted text-sm md:text-base">
+                        <p >
                             Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum
                             sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus.
                         </p>
-                        <p className="text-muted text-sm md:text-base">
+                        <p >
                             mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
                         </p>
                         <div className="hero-button flex gap-3 mt-4">
@@ -210,7 +212,7 @@ const Landing = () => {
             </div>
 
             <div className="container card-container   xl:flex lg:flex">
-                <div className="features-section w-full">
+                <div className="features-section ">
 
                     <div className="features-text lg:w-2/3 xl:w-2/3 md:w-full sm:w-full xs:w-full ">
                         <h2 className=" mb-4  ">Light, Fast & Powerful</h2>
@@ -239,12 +241,12 @@ const Landing = () => {
                     </div>
                 </div>
 
-                <div className="row mt-5">
-                    <div className="hidden  md:block   md:w-full sm:w-full feature-img">
-                        <img src={featureImg} alt="Feature Img" className="img-fluid w-full h-auto" />
+                <div class="mt-5">
+                    <div class="xl:w-96 lg:w-96 md:w-full sm:w-full w-full hidden lg:block feature-img">
+                        <img src={featureImg} alt="Feature Img" />
                     </div>
-
                 </div>
+
             </div>
             <div className="container">
                 <div className="info-container grid gap-4">
@@ -281,40 +283,40 @@ const Landing = () => {
                 </div>
             </div>
 
-            <div className="container-fluid">
-                <div className="pricing-container grid gap-8 mt-5 sm:mt-5">
+
+            <div className="pricing-container grid gap-8 mt-5 sm:mt-5">
 
 
-                    <div className="col-span-12 text-center">
-                        <div className="pricing-text">
-                            <h2 >A Price To Suit Everyone</h2>
-                            <h6>
-                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-                                Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-                            </h6>
-                        </div>
+                <div className="col-span-12 text-center">
+                    <div className="pricing-text">
+                        <h2 >A Price To Suit Everyone</h2>
+                        <h6>
+                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                            Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
+                        </h6>
                     </div>
-
-
-                    <div className="col-span-12 text-center">
-                        <div className="pricing-design">
-                            <h3>$40</h3>
-                            <h5>UI Design Kit</h5>
-                        </div>
-                    </div>
-
-
-                    <div className="col-span-12 text-center">
-                        <div className="pricing-button">
-                            <p>See, One price. Simple.</p>
-                            <button className=" hover:bg-blue-600">
-                                Purchase UI Kit
-                            </button>
-                        </div>
-                    </div>
-
                 </div>
+
+
+                <div className="col-span-12 text-center">
+                    <div className="pricing-design">
+                        <h3>$40</h3>
+                        <h5>UI Design Kit</h5>
+                    </div>
+                </div>
+
+
+                <div className="col-span-12 text-center">
+                    <div className="pricing-button">
+                        <p>See, One price. Simple.</p>
+                        <button className=" hover:bg-blue-600">
+                            Purchase UI Kit
+                        </button>
+                    </div>
+                </div>
+
             </div>
+
 
             <div className="footer-section bg-gray-100 py-8">
                 <div className="container mx-auto px-4">
