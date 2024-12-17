@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Navbar, Nav, Button, Modal } from "react-bootstrap";
+import { Navbar, Nav, Button, Modal, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../Components/style.css'
 import groupImg from '../assets/images/Group.png'
@@ -40,145 +40,164 @@ const cardData = [
 const Landing = () => {
     const [expanded, setExpanded] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [modalType, setModalType] = useState("");
 
-    const handleToggle = () => {
-        setExpanded(!expanded);
-    };
+    const handleToggle = () => setExpanded(!expanded);
 
-    const handleShowModal = () => {
+    const handleShowModal = (type) => {
+        setModalType(type);
         setShowModal(true);
     };
-
-    const handleCloseModal = () => {
-        setShowModal(false);
-    }
-
-
+    const handleCloseModal = () => setShowModal(false);
     return (
         <>
-            <Navbar
-                expand={false}
-                className="container mx-auto flex justify-between items-center w-full"
-                expanded={expanded}
-            >
-                <Navbar.Brand href="#" className="font-bold ml-4">
-                    Logo
-                </Navbar.Brand>
 
-                <Navbar.Toggle
-                    aria-controls="basic-navbar-nav"
-                    onClick={handleToggle}
-                    className="border-0 mr-4"
+            <div>
+                <Navbar
+                    expand="md"
+                    className="container flex justify-between items-center py-4"
+                    expanded={expanded}
                 >
-                    <span className="navbar-toggler-icon"></span>
-                </Navbar.Toggle>
 
-                <Navbar.Collapse className="navbar-collapse" id="basic-navbar-nav">
-                    <Nav className="flex flex-col md:flex-row md:space-x-4">
-                        <Nav.Link href="#" className="ml-4 hover:text-blue-500">
-                            Home
-                        </Nav.Link>
-                        <Nav.Link href="#" className="hover:text-blue-500">
-                            About
-                        </Nav.Link>
-                        <Nav.Link href="#" className="hover:text-blue-500">
-                            Contact
-                        </Nav.Link>
-                    </Nav>
-                    <div className="flex flex-wrap justify-start mt-4 md:mt-0">
-                        <button
-                            className=" buy-now      mr-3 hover:bg-blue-600"
-                            onClick={handleShowModal}
-                        >
-                            Purchase Item
-                        </button>
-                        <button className="buy-now     hover:bg-gray-600">
-                            Login
-                        </button>
-                    </div>
-                </Navbar.Collapse>
-            </Navbar>
+                    <Navbar.Brand href="#" className="font-bold ml-4 ">
+                        Logo
+                    </Navbar.Brand>
 
-            <Modal
-                show={showModal}
-                onHide={handleCloseModal}
-                centered
-                className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
-            >
-                <div className="bg-white rounded-lg  w-full max-w-md">
-                    <Modal.Header className="flex justify-between items-center p-4 border-b">
-                        <h5 className="text-lg font-semibold">Purchase Description</h5>
-                        <button
-                            className="text-gray-600 hover:text-gray-900"
-                            onClick={handleCloseModal}
-                        >
-                            ×
-                        </button>
+
+                    <Navbar.Toggle
+                        aria-controls="basic-navbar-nav"
+                        onClick={handleToggle}
+                        className="md:hidden p-2 me-4 border-none"
+                    >
+                        <span className="navbar-toggler-icon"></span>
+                    </Navbar.Toggle>
+
+
+                    <Navbar.Collapse
+                        id="basic-navbar-nav"
+                        className={`${expanded ? "block" : "hidden"} md:flex space-x-6`}
+                    >
+                        <Nav className="me-auto xl:ms-80 lg:ms-56 md:ms-28 ">
+                            <Nav.Link href="#" className="text-gray-700 hover:text-blue-500">
+                                Home
+                            </Nav.Link>
+                            <Nav.Link href="#" className="text-gray-700 hover:text-blue-500">
+                                About
+                            </Nav.Link>
+                            <Nav.Link href="#" className="text-gray-700 hover:text-blue-500">
+                                Contact
+                            </Nav.Link>
+                        </Nav>
+
+
+                        <div className="flex ms-0 space-x-4">
+                            <button
+                                onClick={() => handleShowModal("purchase")}
+                                className=" hover:bg-blue-600 buy-now"
+                            >
+                                Purchase Item
+                            </button>
+                            <button
+                                onClick={() => handleShowModal("login")}
+                                className=" hover:bg-gray-700 buy-now"
+                            >
+                                Login
+                            </button>
+                        </div>
+                    </Navbar.Collapse>
+                </Navbar>
+                <Modal show={showModal} onHide={handleCloseModal} centered>
+                    <Modal.Header closeButton>
+                        <Modal.Title>
+                            {modalType === "login" ? "Login" : "Purchase Item"}
+                        </Modal.Title>
                     </Modal.Header>
-                    <Modal.Body className="p-6">
-                        <h3 className="text-xl font-bold mb-4">Please Enter the Item Details</h3>
-                        <form>
-                            <div className="mb-4">
-                                <label
-                                    htmlFor="itemName"
-                                    className="block text-sm font-semibold text-gray-700 mb-1"
-                                >
-                                    Name:
-                                </label>
-                                <input
-                                    type="text"
-                                    id="itemName"
-                                    placeholder="Enter the item name..."
-                                    className="block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 px-3 py-2"
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label
-                                    htmlFor="itemPrice"
-                                    className="block text-sm font-semibold text-gray-700 mb-1"
-                                >
-                                    Price:
-                                </label>
-                                <input
-                                    type="number"
-                                    id="itemPrice"
-                                    placeholder="Enter the price..."
-                                    className="block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 px-3 py-2"
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label
-                                    htmlFor="itemDescription"
-                                    className="block text-sm font-semibold text-gray-700 mb-1"
-                                >
-                                    Description:
-                                </label>
-                                <input
-                                    type="text"
-                                    id="itemDescription"
-                                    placeholder="Enter the description..."
-                                    className="block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 px-3 py-2"
-                                />
-                            </div>
-                        </form>
+                    <Modal.Body>
+                        {modalType === "login" ? (
+                            <Form>
+                                <Form.Group className="mb-3" controlId="email">
+                                    <Form.Label>Email address</Form.Label>
+                                    <Form.Control
+                                        type="email"
+                                        placeholder="name@example.com"
+                                        autoFocus
+                                        className="px-4 py-2 border border-gray-300 rounded-lg"
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="password">
+                                    <Form.Label>Password</Form.Label>
+                                    <Form.Control
+                                        type="password"
+                                        placeholder="Enter your password"
+                                        className="px-4 py-2 border border-gray-300 rounded-lg"
+                                    />
+                                </Form.Group>
+                            </Form>
+                        ) : (
+                            <form>
+                                <div className="mb-4">
+                                    <label
+                                        htmlFor="itemName"
+                                        className="block text-sm font-semibold text-gray-700 mb-1"
+                                    >
+                                        Name:
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="itemName"
+                                        placeholder="Enter the item name..."
+                                        className="block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 px-3 py-2"
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label
+                                        htmlFor="itemPrice"
+                                        className="block text-sm font-semibold text-gray-700 mb-1"
+                                    >
+                                        Price:
+                                    </label>
+                                    <input
+                                        type="number"
+                                        id="itemPrice"
+                                        placeholder="Enter the price..."
+                                        className="block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 px-3 py-2"
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label
+                                        htmlFor="itemDescription"
+                                        className="block text-sm font-semibold text-gray-700 mb-1"
+                                    >
+                                        Description:
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="itemDescription"
+                                        placeholder="Enter the description..."
+                                        className="block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 px-3 py-2"
+                                    />
+                                </div>
+                            </form>
+                        )}
                     </Modal.Body>
-                    <Modal.Footer className="flex justify-end space-x-2 p-4 border-t">
-                        <button
-                            className="bg-gray-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-gray-600"
+                    <Modal.Footer>
+                        <Button
+                            variant="secondary"
                             onClick={handleCloseModal}
+                            className="px-4 py-2"
                         >
-                            Cancel
-                        </button>
-                        <button
-                            className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600"
+                            Close
+                        </Button>
+                        <Button
+                            variant={modalType === "login" ? "primary" : "success"}
                             onClick={handleCloseModal}
+                            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
                         >
-                            Confirm Purchase
-                        </button>
+                            {modalType === "login" ? "Login" : "Confirm Purchase"}
+                        </Button>
                     </Modal.Footer>
-                </div>
-            </Modal>
-
+                </Modal>
+            </div>
 
             <div className="container-fluid main-section">
                 <div className="flex justify-center items-center">
