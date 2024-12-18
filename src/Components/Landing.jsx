@@ -14,7 +14,7 @@ import twitterImg from '../assets/images/twitter.png'
 import utubeImg from '../assets/images/utube.png'
 import instaImg from '../assets/images/Instagram.png'
 import axios from "axios";
-
+import useSubmitForm from './useSubmitForm';
 
 const cardData = [
     {
@@ -42,12 +42,12 @@ const Landing = () => {
     const [expanded, setExpanded] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [modalType, setModalType] = useState("");
-    const [userData, setUserData] = useState([]);
-    const [formData, setFormData] = useState({
-        name: "",
-        price: "",
-        description: "",
-    });
+    // const [userData, setUserData] = useState([]);
+    // const [formData, setFormData] = useState({
+    //     name: "",
+    //     price: "",
+    //     description: "",
+    // });
 
     const handleToggle = () => setExpanded(!expanded);
 
@@ -57,34 +57,51 @@ const Landing = () => {
     };
     const handleCloseModal = () => setShowModal(false);
 
+    // const handleChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setFormData((prev) => ({ ...prev, [name]: value }));
+    // };
+
+    // const handleSubmit = async () => {
+    //     try {
+    //         const response = await axios.post(
+    //             "http://localhost:3001/api/users",
+    //             formData
+    //         );
+    //         const newUser = response.data;
+    //         setUserData((prev) => [...prev, newUser]);
+    //         setFormData({ name: "", description: "", price: "" });
+    //         setShowModal(false);
+
+    //     } catch (error) {
+    //         console.error("Error saving purchase:", error);
+    //     }
+    // };
+    const {
+        userData,
+        formData,
+        isLoading,
+        error,
+        setFormData,
+        handleSubmit,
+    } = useSubmitForm("http://localhost:3001/api/users", {
+        name: "",
+        description: "",
+        price: "",
+    });
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = async () => {
-        try {
-            const response = await axios.post(
-                "http://localhost:3001/api/users",
-                formData
-            );
-            const newUser = response.data;
-            setUserData((prev) => [...prev, newUser]);
-            setFormData({ name: "", description: "", price: "" });
-            setShowModal(false);
-
-        } catch (error) {
-            console.error("Error saving purchase:", error);
-        }
-    };
 
 
     return (
         <>
-
             <div>
                 <Navbar expand="md" className="container flex justify-between items-center py-4" expanded={expanded}>
-                    <Navbar.Brand href="#" className="font-bold ml-4">
+                    <Navbar.Brand href="#" className="font-bold ms-4">
                         Logo
                     </Navbar.Brand>
 
@@ -228,6 +245,9 @@ const Landing = () => {
                     </Modal.Footer>
                 </Modal>
             </div>
+
+
+
 
             <div className="container-fluid main-section">
                 <div className="flex justify-center items-center">
