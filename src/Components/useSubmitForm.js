@@ -7,7 +7,7 @@ function useSubmitForm(url, initialFormData = {}) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (onSuccess) => {
     setIsLoading(true);
     setError(null);
     try {
@@ -15,6 +15,7 @@ function useSubmitForm(url, initialFormData = {}) {
       const newUser = response.data;
       setUserData((prev) => [...prev, newUser]);
       setFormData(initialFormData);
+      if (onSuccess) onSuccess();
     } catch (err) {
       console.error("Error saving purchase:", err);
       setError(err.message);
